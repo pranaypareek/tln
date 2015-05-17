@@ -1,19 +1,23 @@
 var util = require('util');
 var shell = require('shelljs');
 
+var username = '';
+//token needs to encoded
+var token = '';
+
 var cmd = 'curl -X POST https://github.com/signup_check/username' +
-          '?value=aak' +
-          '&authenticity_token=' +
-          'UqNiayqrKea82%2BVQ6I98Z1SrUwIcWDCeaYJTiK' +
-          '%2BFfhicDpKiIXSA9qVMTbpRoM16u6YPLmc7Y4YyOPu%2FAbwk4A%3D%3D';
+          '?value=' + username + 
+          '&authenticity_token=' + token;
+          
 shell.exec(cmd,
   function (err, res) {
-    //console.log('-------------------->', res.split("\n")[3]);
+    //extracting out the API response message returned by cURL
     var scriptResponse = res.split("\n")[3];
     if (err !== null) {
-      //console.log('exec error: ' + err);
+      console.log('exec error: ' + err);
     }
 
+    //res.split("\n")[3] spits array and returns the message 'Username is already taken'
     if(scriptResponse === 'Username is already taken') {
       console.log('\n\n ---> Message: You should know the Username IS already taken');
     } else {
@@ -21,12 +25,13 @@ shell.exec(cmd,
     }
 });
 
+//required reference material:
 /*var sys = require('sys');
 var exec = require('child_process').exec;
 var util = require('util');
 var shell = require('shelljs');
 var res = null;
-exec('~/Pranay_disk/hack-stuff/ghUsernames/stuff.sh',
+exec('~/path/to/script.sh',
   function (error, stdout, stderr) {
     sys.print('stdout: ', util.inspect(stdout));
     if (error !== null) {
@@ -47,7 +52,7 @@ var exec = require('child_process').exec;
 function puts(error, stdout, stderr) { sys.puts(stdout) }
 exec("stuff.sh", puts);
 
-shell.exec('python skills.py ' + linkedinLink, function(err, result) {
+shell.exec('python qwerty.py ' + args, function(err, result) {
   if (err) {
       res.json('err');
   }
