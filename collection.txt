@@ -1,0 +1,3 @@
+This is where all the output from the executed shell/nodejs script goes.
+
+To inlcude all the available three-lettered github usernames.
